@@ -4,15 +4,13 @@ import App from './App'
 import iView from 'iview'
 
 // 组件路由导入
-import companyList from './components/company-list/company-list'
-import company from './components/company/company'
+
 
 import studentList from './components/student-list/student-list'
 import student from './components/student/student.vue'
-import news from './components/news/news'
-import newDetail from './components/news-detail/news-detail'
-import addNews from './components/add-news/add-news'
-import updateNews from './components/update-news/update-news'
+import invited from './components/invited/invited'
+import getDeliveried from './components/get-delivery/get-delivery'
+
 
 // home 子路由
 
@@ -35,15 +33,7 @@ let app = Vue.extend(App);
 
 router.map({
   '/': {
-    component: companyList
-  },
-  '/company-list': {
-    name: 'company-list',
-    component: companyList,
-  },
-  '/company/:companyname': {
-    name: 'company',
-    component: company
+    component: studentList
   },
   '/students': {
     name: 'student-list',
@@ -53,22 +43,15 @@ router.map({
     name: 'student',
     component: student
   },
-  '/news': {
-    name: 'news',
-    component: news
+  '/invitations': {
+    name: 'student',
+    component: invited
+
   },
-  '/news/:id': {
-    name: 'news-detail',
-    component: newDetail
-  },
-  '/news/add-news': {
-    name: 'addNews',
-    component: addNews
-  },
-  '/news/update-news': {
-    name: 'update-news',
-    component: updateNews
-  },
+  '/received': {
+    name: 'student',
+    component: getDeliveried
+  }
 })
 
 router.start(app, '#app');

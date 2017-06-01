@@ -12,21 +12,7 @@ export default {
     },
 
     SIGN_IN(state, result) {
-        if (result.ok) {
-            state.session = result.session;
-        } else {
-            state.session = null;
-        }
-    },
-
-
-    SET_CURRENT_PAGE(state, page, companies) {
-        state.currentPage = page;
-        state.currentCompanies = companies;
-    },
-
-    SET_TOTAL_COUNT(state, totalCount) {
-        state.totalCount = totalCount.count;
+        state.session = result;
     },
 
     SET_CURRENT_COMPANY_DETAIL(state, currentCompany) {
@@ -41,14 +27,6 @@ export default {
         state.currentActiveKey = activeKey;
     },
 
-    REMOVE_COMPANY(state, name, email) {
-        var index = state.currentCompanies.findIndex((item) => {
-            return item.email === email && item.name == name
-        })
-        if (index >= 0) {
-            state.currentCompanies.splice(index, 1);
-        }
-    },
 
     // 学生部分
     SET_CURRENT_STUDENT_PAGE(state, page, students) {
@@ -66,45 +44,21 @@ export default {
             state.currentStudent = student;
         }
     },
-    REMOVE_STUDENT(state, email) {
-        var index = state.currentStudents.findIndex((item) => {
-            return item.email == email
-        })
-        if (index >= 0) {
-            state.currentStudents.splice(index, 1);
-        }
-    },
 
-    SET_ALL_NEWS(state, allNews) {
-        state.allNews = allNews
-    },
+    // 邀请部分
 
-
-    ADD_NEWS(state, news) {
-        if (news) {
-            state.allNews.push(news)
-        }
+    SET_INVITED_STUDENTS(state, students) {
+        state.invitedStudents = students;
     },
-    SET_CURRENT_NEWS(state, id) {
-        var news = state.allNews.find((item) => {
-            return item.id === id;
-        })
-        if (news) {
-            state.currentNews = news;
-        }
+    UPDATE_CURRENT_STUDENT(state, email) {
+        var student = state.currentStudents.find(item => item.email === email);
+        state.invitedStudents.push(student);
+        student.getInvations.push(state.session)
     },
-    REMOVE_NEWS(state, id) {
-        var index = state.allNews.findIndex((item) => {
-            return item.id == id
-        })
-        if (index >= 0) {
-            state.allNews.splice(index, 1);
-        }
+    SET_DELIVERIED_STUDENTS(state, emails) {
+        state.deliveriedStudents = emails
     },
-    UPDATE_NEWS(state, news) {
-        var index = state.allNews.findIndex((item) => {
-            return item.id == news.id
-        })
-        Vue.set(state.allNews, index, news);
+    SIGN_OUT(state) {
+        state.session = null;
     }
 }

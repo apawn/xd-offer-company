@@ -8,20 +8,12 @@
               theme="light"
               :active-key="currentActiveKey">
             <Menu-item key="1"
-                       @click="routerGo('/company-list')">
-                公司
-            </Menu-item>
-            <Menu-item key="2"
                        @click="routerGo('/students')">
                 毕业生
             </Menu-item>
-            <Menu-item key="3"
+            <Menu-item key="2"
                        @click="routerGo('/news')">
-                公告
-            </Menu-item>
-            <Menu-item key="4"
-                       @click="routerGo('/my')">
-                流量情况
+                公司信息
             </Menu-item>
         </Menu>
     </div>

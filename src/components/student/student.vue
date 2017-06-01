@@ -91,26 +91,26 @@
         </div>
     
         <div class="remove-wrapper">
-            <i-button type="error"
-                      @click="removeStudent()">
-                删除学生
+            <i-button type="success"
+                      @click="invite()">
+                邀请学生
             </i-button>
         </div>
     </div>
 </template>
 <script>
-import { routerGo, setCurrentActiveKey, removeStudentAction } from '../../vuex/actions.js'
+import { routerGo, setCurrentActiveKey, inviteStudent } from '../../vuex/actions.js'
 export default {
     methods: {
-        removeStudent() {
-            this.removeStudentAction(this.currentStudent.email).then(() => {
-                this.$Message.success('删除成功');
-                setTimeout(() => {
-                    this.routerGo('/students');
-                }, 200);
-            }).catch(() => {
-                this.$Message.success('删除失败');
+        invite() {
+            this.inviteStudent(this.currentStudent.email).then(res => {
+                this.$Message.success("邀请成功");
+            }).catch(err => {
+                this.$Message.error("邀请成功");
             })
+        },
+        hasDeliveried(email) {
+            return this.invitedStudents.indexOf(this.currentStudent.email) >= 0;
         }
     },
     created() {
@@ -119,12 +119,13 @@ export default {
     },
     vuex: {
         getters: {
-            currentStudent: state => state.currentStudent
+            currentStudent: state => state.currentStudent,
+            current: state => state.invitedStudents
         },
         actions: {
             routerGo,
             setCurrentActiveKey,
-            removeStudentAction
+            inviteStudent
         }
     }
 }

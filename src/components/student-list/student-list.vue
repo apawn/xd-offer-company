@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { routerGo, getCurrentStudentPage, getStudentsCount, goStudentDetail, setCurrentActiveKey, removeStudentAction } from '../../vuex/actions.js'
+import { routerGo, getCurrentStudentPage, getStudentsCount, goStudentDetail, setCurrentActiveKey, inviteStudent } from '../../vuex/actions.js'
 export default {
     data() {
         return {
@@ -37,7 +37,9 @@ export default {
             }, {
                 title: '操作',
                 render: function (row, column, index) {
-                    return ` <i-button type="error" size="small" @click="removeStudent('${row.email}')">删除</i-button>`
+                    return ` <i-button :type="hasDeliveried('${row.email}') ? 'success' : 'success' "
+                        :disabled="hasDeliveried('${row.email}')"
+                     size="small" @click="invite('${row.email}')">邀请</i-button>`
                 }
             }]
         }
@@ -59,13 +61,17 @@ export default {
         pageChange(currentPage) {
             this.getCurrentStudentPage(currentPage);
         },
-        removeStudent(email) {
-            console.log(email);
-            this.removeStudentAction(email).then(() => {
-                this.$Message.success('删除成功');
+
+        invite(email) {
+            this.inviteStudent(this.session.email, email).then(res => {
+                this.$Message.success("邀请成功");
             }).catch(err => {
-                this.$Message.error('删除失败');
+                console.log(err);
+                this.$Message.error("邀请失败");
             })
+        },
+        hasDeliveried(email) {
+            return !this.session || this.invitedStudents.find(item => item.email == email) != null
         }
     },
 
@@ -82,22 +88,22 @@ export default {
             console.log(err);
             return;
         })
-
-
     },
     vuex: {
         getters: {
+            session: state => state.session,
             totalCount: state => state.totalStudentCount,
             currentPage: state => state.currentStudentPage,
-            currentStudents: state => state.currentStudents
+            currentStudents: state => state.currentStudents,
+            invitedStudents: state => state.invitedStudents
         },
         actions: {
             routerGo,
             getCurrentStudentPage,
             getStudentsCount,
             setCurrentActiveKey,
-            removeStudentAction,
-            goStudentDetail
+            goStudentDetail,
+            inviteStudent
         }
     }
 
