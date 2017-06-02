@@ -10,6 +10,7 @@ import studentList from './components/student-list/student-list'
 import student from './components/student/student.vue'
 import invited from './components/invited/invited'
 import getDeliveried from './components/get-delivery/get-delivery'
+import company from './components/company/company'
 
 
 // home 子路由
@@ -39,7 +40,7 @@ router.map({
     name: 'student-list',
     component: studentList
   },
-  '/students/:name': {
+  '/student/:name': {
     name: 'student',
     component: student
   },
@@ -51,7 +52,10 @@ router.map({
   '/received': {
     name: 'student',
     component: getDeliveried
-  }
+  },
+  '/my': {
+    component: company
+  },
 })
 
 router.start(app, '#app');

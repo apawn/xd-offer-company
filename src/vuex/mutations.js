@@ -52,13 +52,18 @@ export default {
     },
     UPDATE_CURRENT_STUDENT(state, email) {
         var student = state.currentStudents.find(item => item.email === email);
-        state.invitedStudents.push(student);
-        student.getInvations.push(state.session)
+        if (student) {
+            state.invitedStudents.push(student);
+        }
+
     },
     SET_DELIVERIED_STUDENTS(state, emails) {
         state.deliveriedStudents = emails
     },
     SIGN_OUT(state) {
         state.session = null;
+    },
+    SET_CURRENT_STUDENT_DETAIL(state, student) {
+        state.currentStudent = student.student;
     }
 }

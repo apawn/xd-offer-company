@@ -12,7 +12,7 @@
                 毕业生
             </Menu-item>
             <Menu-item key="2"
-                       @click="routerGo('/news')">
+                       @click="routerGo('/my')">
                 公司信息
             </Menu-item>
         </Menu>

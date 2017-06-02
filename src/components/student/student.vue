@@ -91,10 +91,9 @@
         </div>
     
         <div class="remove-wrapper">
-            <i-button type="success"
-                      @click="invite()">
-                邀请学生
-            </i-button>
+            <i-button :type="hasDeliveried() ? 'success' : 'success'"
+                      :disabled="hasDeliveried()"
+                      @click="invite()">邀请</i-button>
         </div>
     </div>
 </template>
@@ -103,14 +102,24 @@ import { routerGo, setCurrentActiveKey, inviteStudent } from '../../vuex/actions
 export default {
     methods: {
         invite() {
-            this.inviteStudent(this.currentStudent.email).then(res => {
+            this.inviteStudent(this.session.email, this.currentStudent.email).then(res => {
                 this.$Message.success("邀请成功");
+                setTimeout(() => {
+                    this.routerGo('/students');
+                }, 200)
             }).catch(err => {
-                this.$Message.error("邀请成功");
+                console.log(err);
+                this.$Message.error("邀请失败");
             })
         },
-        hasDeliveried(email) {
-            return this.invitedStudents.indexOf(this.currentStudent.email) >= 0;
+        hasDeliveried() {
+            if (this.currentStudent) {
+                var email = this.currentStudent.email;
+                console.log(this.invitedStudents);
+                return !this.session || this.invitedStudents.find(item => item.email == email) != null
+            }
+            return true;
+
         }
     },
     created() {
@@ -119,8 +128,9 @@ export default {
     },
     vuex: {
         getters: {
+            session: state => state.session,
             currentStudent: state => state.currentStudent,
-            current: state => state.invitedStudents
+            invitedStudents: state => state.invitedStudents
         },
         actions: {
             routerGo,

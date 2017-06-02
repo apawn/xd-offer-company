@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { routerGo, getCurrentStudentPage, getStudentsCount, goStudentDetail, setCurrentActiveKey, inviteStudent } from '../../vuex/actions.js'
+import { routerGo, getCurrentStudentPage, getStudentsCount, getCurrentStudentDetail, setCurrentActiveKey, inviteStudent } from '../../vuex/actions.js'
 export default {
     data() {
         return {
@@ -72,6 +72,13 @@ export default {
         },
         hasDeliveried(email) {
             return !this.session || this.invitedStudents.find(item => item.email == email) != null
+        },
+        goStudentDetail(name, email) {
+            this.getCurrentStudentDetail(email).then(res => {
+                this.routerGo(`student/${name}`);
+            }).catch(err => {
+                console.log(err);
+            })
         }
     },
 
@@ -89,6 +96,7 @@ export default {
             return;
         })
     },
+
     vuex: {
         getters: {
             session: state => state.session,
@@ -102,7 +110,7 @@ export default {
             getCurrentStudentPage,
             getStudentsCount,
             setCurrentActiveKey,
-            goStudentDetail,
+            getCurrentStudentDetail,
             inviteStudent
         }
     }

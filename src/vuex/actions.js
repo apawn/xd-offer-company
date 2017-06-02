@@ -89,7 +89,7 @@ export const getCurrentStudentDetail = ({ dispatch }, email) => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                name: email
+                email: email
             })
         }).then(res => res.json()).then(res => {
             dispatch('SET_CURRENT_STUDENT_DETAIL', res);

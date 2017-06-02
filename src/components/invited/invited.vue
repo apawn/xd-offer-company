@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { routerGo, getCurrentStudentPage, getStudentsCount, goStudentDetail, setCurrentActiveKey, getInvitedStudents, setSignInModal } from '../../vuex/actions.js'
+import { routerGo, getCurrentStudentPage, getStudentsCount, setCurrentActiveKey, getInvitedStudents, setSignInModal, getCurrentStudentDetail } from '../../vuex/actions.js'
 export default {
     data() {
         return {
@@ -45,6 +45,13 @@ export default {
         }
     },
     methods: {
+        goStudentDetail(name, email) {
+            this.getCurrentStudentDetail(email).then(res => {
+                this.routerGo(`student/${name}`);
+            }).catch(err => {
+                console.log(err);
+            })
+        }
     },
 
     created() {
@@ -66,7 +73,7 @@ export default {
             routerGo,
             setCurrentActiveKey,
             getInvitedStudents,
-            goStudentDetail
+            getCurrentStudentDetail
         }
     }
 
