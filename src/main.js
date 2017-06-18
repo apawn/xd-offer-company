@@ -24,6 +24,7 @@ import './common/less/overright-iview.less'
 
 
 Vue.use(iView);
+document.title = "xd-offer-company"
 
 
 

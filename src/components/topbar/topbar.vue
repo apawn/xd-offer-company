@@ -3,7 +3,8 @@
         <Row>
             <i-col span="6"
                    class="company-wrapper">
-                <a class="company">我要招聘</a>
+                <a class="company"
+                   href="/index.html">我要求职</a>
             </i-col>
     
             <i-col span="18"
